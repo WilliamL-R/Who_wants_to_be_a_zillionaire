@@ -1,7 +1,4 @@
-import sun.applet.Main;
-
 import javax.swing.*;
-import javax.swing.DefaultListModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -30,7 +27,16 @@ public class MainGUI{
     private JButton category3Select;
     private JLabel currentMoney;
     private JButton startGame;
+    private JPanel QuestionPanel;
+    private JButton answer1;
+    private JButton answer2;
+    private JButton answer3;
+    private JButton answer4;
+    private JButton help1;
+    private JButton help2;
+    private JLabel questionLabel;
     private PlayerList playerList;
+
 
 
 
@@ -39,6 +45,7 @@ public class MainGUI{
         RulesPanel.setVisible(false);
         PlayerPanel.setVisible(false);
         CategoryPanel.setVisible(false);
+        QuestionPanel.setVisible(false);
         MenuPanel.setVisible(true);
 
 
@@ -103,9 +110,20 @@ public class MainGUI{
             public void actionPerformed(ActionEvent e) {
                 PlayerPanel.setVisible(false);
                 CategoryPanel.setVisible(true);
-                Game game = new Game(playerList);
-                playerActiveLabel.setText("Active Player: " + game.getCurrentPlayerName());
-                currentMoney.setText("Current Money: £" + game.getCurrentPlayerMoney());
+                CurrentPlayer curplay = new CurrentPlayer(playerList);
+                playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
+                currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+            }
+        });
+
+        generalKnowledgeSelect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CategoryPanel.setVisible(false);
+                QuestionPanel.setVisible(true);
+                QuizQuestions quiz = new QuizQuestions();
+                quiz.QuizQuestions();
+                CurrentQuestion currq = new CurrentQuestion(quiz);
             }
         });
     }
@@ -116,12 +134,17 @@ public class MainGUI{
         startPlayersList.setModel(playerList);
     }
 
+
     public static void main(String[] args) {
         JFrame frame = new JFrame("MainGUI");
         frame.setContentPane(new MainGUI().MainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+//        QuizQuestions quiz = new QuizQuestions();
+//        quiz.QuizQuestions();
+//        Question quest = quiz.generateGeneralQuestion();
+//        System.out.println(quest);
 
     }
 }
