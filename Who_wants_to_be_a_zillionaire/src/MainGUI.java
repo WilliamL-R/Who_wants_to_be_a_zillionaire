@@ -35,8 +35,10 @@ public class MainGUI{
     private JButton help1;
     private JButton help2;
     private JLabel questionLabel;
+    private CurrentPlayer curplay;
     private PlayerList playerList;
-
+    private QuizQuestions quiz;
+    private CurrentQuestion currq;
 
 
 
@@ -110,7 +112,7 @@ public class MainGUI{
             public void actionPerformed(ActionEvent e) {
                 PlayerPanel.setVisible(false);
                 CategoryPanel.setVisible(true);
-                CurrentPlayer curplay = new CurrentPlayer(playerList);
+                setCurrentPlayer();
                 playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
                 currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
             }
@@ -121,9 +123,98 @@ public class MainGUI{
             public void actionPerformed(ActionEvent e) {
                 CategoryPanel.setVisible(false);
                 QuestionPanel.setVisible(true);
-                QuizQuestions quiz = new QuizQuestions();
-                quiz.QuizQuestions();
-                CurrentQuestion currq = new CurrentQuestion(quiz);
+                genQuestion();
+                questionLabel.setText(currq.getCurrentQString());
+                answer1.setText(currq.getCurrentAnswers(0));
+                answer2.setText(currq.getCurrentAnswers(1));
+                answer3.setText(currq.getCurrentAnswers(2));
+                answer4.setText(currq.getCurrentAnswers(3));
+
+
+            }
+        });
+        answer1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int answer = 1;
+                boolean rightAnswer = currq.checkAnswer(answer);
+                if(rightAnswer == true){
+                    curplay.setCurrentPlayerMoney();
+                    QuestionPanel.setVisible(false);
+                    CategoryPanel.setVisible(true);
+                    currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                }else{
+                    JOptionPane.showMessageDialog(MainPanel, "You have lost the game.");
+                    curplay.setCurrentPlayerTurnOver(true);
+                    QuestionPanel.setVisible(false);
+                    CategoryPanel.setVisible(true);
+                    setCurrentPlayer();
+                    playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
+                    currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                }
+            }
+        });
+        answer2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int answer = 2;
+                boolean rightAnswer = currq.checkAnswer(answer);
+                if(rightAnswer == true){
+                    curplay.setCurrentPlayerMoney();
+                    QuestionPanel.setVisible(false);
+                    CategoryPanel.setVisible(true);
+                    currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                }else{
+                    JOptionPane.showMessageDialog(MainPanel, "You have lost the game.");
+                    System.out.println(curplay.isCurrentPlayerTurn());
+                    QuestionPanel.setVisible(false);
+                    CategoryPanel.setVisible(true);
+                    setCurrentPlayer();
+                    playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
+                    currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                }
+            }
+        });
+        answer3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int answer = 3;
+                boolean rightAnswer = currq.checkAnswer(answer);
+                if(rightAnswer == true){
+                    curplay.setCurrentPlayerMoney();
+                    QuestionPanel.setVisible(false);
+                    CategoryPanel.setVisible(true);
+                    currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                }else{
+                    JOptionPane.showMessageDialog(MainPanel, "You have lost the game.");
+                    curplay.setCurrentPlayerTurnOver(true);
+                    QuestionPanel.setVisible(false);
+                    CategoryPanel.setVisible(true);
+                    setCurrentPlayer();
+                    playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
+                    currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                }
+            }
+        });
+        answer4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int answer = 4;
+                boolean rightAnswer = currq.checkAnswer(answer);
+                if(rightAnswer == true){
+                    curplay.setCurrentPlayerMoney();
+                    QuestionPanel.setVisible(false);
+                    CategoryPanel.setVisible(true);
+                    currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                }else{
+                    JOptionPane.showMessageDialog(MainPanel, "You have lost the game.");
+                    curplay.setCurrentPlayerTurnOver(true);
+                    QuestionPanel.setVisible(false);
+                    CategoryPanel.setVisible(true);
+                    setCurrentPlayer();
+                    playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
+                    currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                }
             }
         });
     }
@@ -134,6 +225,28 @@ public class MainGUI{
         startPlayersList.setModel(playerList);
     }
 
+    public void setCurrentPlayer(){
+        //TODO: End Game using null pointer
+        CurrentPlayer newPlayer = new CurrentPlayer(playerList);
+        if(newPlayer != null){
+            curplay = newPlayer;
+        }else if (newPlayer == null){
+            System.out.println("You have ended the game!");
+            System.exit(0);
+            //gameOverScreen();
+        }
+    }
+
+    public void genQuestion(){
+        quiz = new QuizQuestions();
+        quiz.QuizQuestions();
+        currq = new CurrentQuestion(quiz);
+    }
+
+    public void gameOverScreen(){
+
+    }
+
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("MainGUI");
@@ -141,10 +254,5 @@ public class MainGUI{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-//        QuizQuestions quiz = new QuizQuestions();
-//        quiz.QuizQuestions();
-//        Question quest = quiz.generateGeneralQuestion();
-//        System.out.println(quest);
-
     }
 }

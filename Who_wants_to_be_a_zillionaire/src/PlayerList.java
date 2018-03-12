@@ -34,6 +34,7 @@ public class PlayerList extends DefaultListModel<Player> {
     }
 
     public Player playerTurn(){
+//        System.out.println("I'm in player turn!");
         Player playN;
         int indexLocation = -1;
         for (int i = 0;i<super.size();i++){
@@ -46,7 +47,6 @@ public class PlayerList extends DefaultListModel<Player> {
         if (indexLocation == -1){
             return null;
         }else{
-
             return (Player)super.elementAt(indexLocation);
         }
     }
