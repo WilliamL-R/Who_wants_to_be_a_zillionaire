@@ -3,7 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 
-public class MainGUI{
+public class MainGUI {
 
     private JPanel MainPanel;
     private JPanel MenuPanel;
@@ -40,6 +40,7 @@ public class MainGUI{
     private QuizQuestions quiz;
     private CurrentQuestion currq;
 
+    private int endInt;
 
 
     public MainGUI() {
@@ -76,10 +77,10 @@ public class MainGUI{
         addPlayer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String newPlayerName =  playerNameEntered.getText();
-                if (newPlayerName.equals("")){
+                String newPlayerName = playerNameEntered.getText();
+                if (newPlayerName.equals("")) {
                     JOptionPane.showMessageDialog(MainPanel, "Please enter player name.");
-                }else{
+                } else {
                     playerList.addPlayer(newPlayerName);
                     playerNameEntered.setText("");
                 }
@@ -92,16 +93,17 @@ public class MainGUI{
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedIndex = startPlayersList.getSelectedIndex();
-                if(selectedIndex == -1){
+                if (selectedIndex == -1) {
                     JOptionPane.showMessageDialog(MainPanel, "Please select a player to remove.");
-                }else{
+                } else {
                     Player playN = playerList.getElementAt(selectedIndex);
-                    if(JOptionPane.showConfirmDialog(MainPanel,"Delete player? " + playN,
-                            "Delete confirmation",JOptionPane.YES_NO_OPTION)
-                            == JOptionPane.YES_OPTION);{
-                               playerList.removePlayer(playN.getPlayerName());
-                               playerNameEntered.setText("");
-                               startPlayersList.clearSelection();
+                    if (JOptionPane.showConfirmDialog(MainPanel, "Delete player? " + playN,
+                            "Delete confirmation", JOptionPane.YES_NO_OPTION)
+                            == JOptionPane.YES_OPTION) ;
+                    {
+                        playerList.removePlayer(playN.getPlayerName());
+                        playerNameEntered.setText("");
+                        startPlayersList.clearSelection();
 
                     }
                 }
@@ -138,17 +140,18 @@ public class MainGUI{
             public void actionPerformed(ActionEvent e) {
                 int answer = 1;
                 boolean rightAnswer = currq.checkAnswer(answer);
-                if(rightAnswer == true){
+                if (rightAnswer == true) {
                     curplay.setCurrentPlayerMoney();
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
                     currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(MainPanel, "You have lost the game.");
                     curplay.setCurrentPlayerTurnOver(true);
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
                     setCurrentPlayer();
+                    System.out.println(curplay);
                     playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
                     currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
                 }
@@ -159,17 +162,18 @@ public class MainGUI{
             public void actionPerformed(ActionEvent e) {
                 int answer = 2;
                 boolean rightAnswer = currq.checkAnswer(answer);
-                if(rightAnswer == true){
+                if (rightAnswer == true) {
                     curplay.setCurrentPlayerMoney();
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
                     currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(MainPanel, "You have lost the game.");
                     System.out.println(curplay.isCurrentPlayerTurn());
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
                     setCurrentPlayer();
+                    System.out.println(curplay);
                     playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
                     currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
                 }
@@ -180,17 +184,18 @@ public class MainGUI{
             public void actionPerformed(ActionEvent e) {
                 int answer = 3;
                 boolean rightAnswer = currq.checkAnswer(answer);
-                if(rightAnswer == true){
+                if (rightAnswer == true) {
                     curplay.setCurrentPlayerMoney();
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
                     currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(MainPanel, "You have lost the game.");
                     curplay.setCurrentPlayerTurnOver(true);
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
                     setCurrentPlayer();
+                    System.out.println(curplay);
                     playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
                     currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
                 }
@@ -201,17 +206,18 @@ public class MainGUI{
             public void actionPerformed(ActionEvent e) {
                 int answer = 4;
                 boolean rightAnswer = currq.checkAnswer(answer);
-                if(rightAnswer == true){
+                if (rightAnswer == true) {
                     curplay.setCurrentPlayerMoney();
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
                     currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(MainPanel, "You have lost the game.");
                     curplay.setCurrentPlayerTurnOver(true);
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
                     setCurrentPlayer();
+                    System.out.println(curplay);
                     playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
                     currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
                 }
@@ -219,32 +225,35 @@ public class MainGUI{
         });
     }
 
-    public void createPlayerList(){
+    public void createPlayerList() {
         playerList = new PlayerList();
 
         startPlayersList.setModel(playerList);
     }
 
-    public void setCurrentPlayer(){
+    public void setCurrentPlayer() {
         //TODO: End Game using null pointer
-        CurrentPlayer newPlayer = new CurrentPlayer(playerList);
-        if(newPlayer != null){
-            curplay = newPlayer;
-        }else if (newPlayer == null){
-            System.out.println("You have ended the game!");
-            System.exit(0);
-            //gameOverScreen();
+        curplay = new CurrentPlayer(playerList);
+        if (curplay.getCurrentPlayer() == null) {
+            endReturn();
         }
     }
 
-    public void genQuestion(){
+    public void genQuestion() {
         quiz = new QuizQuestions();
         quiz.QuizQuestions();
         currq = new CurrentQuestion(quiz);
     }
 
-    public void gameOverScreen(){
+    public void gameOverScreen() {
 
+        System.out.println("You have lost the game!");
+        System.exit(0);
+    }
+
+
+    public void endReturn(){
+        gameOverScreen();
     }
 
 

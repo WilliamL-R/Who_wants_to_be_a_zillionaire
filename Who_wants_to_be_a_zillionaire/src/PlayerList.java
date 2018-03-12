@@ -45,6 +45,7 @@ public class PlayerList extends DefaultListModel<Player> {
             }
         }
         if (indexLocation == -1){
+            System.out.println("I return null");
             return null;
         }else{
             return (Player)super.elementAt(indexLocation);

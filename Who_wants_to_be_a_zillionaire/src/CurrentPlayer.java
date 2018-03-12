@@ -16,15 +16,14 @@ public class CurrentPlayer {
      */
 
     public CurrentPlayer(PlayerList playerList){
-        this.currentPlayer = playerList.playerTurn();
-        System.out.println(currentPlayer);
-        if (currentPlayer != null){
-            this.currentPlayerName = currentPlayer.getPlayerName();
-            this.currentPlayerMoney = currentPlayer.getMoneyWon();
-            this.currentPlayerTurn = currentPlayer.isTurnOver();
-        }else{
-            endReturn();
+        Player player = playerList.playerTurn();
+        if (player == null){
+            return;
         }
+        this.currentPlayer = player;
+        this.currentPlayerName = currentPlayer.getPlayerName();
+        this.currentPlayerMoney = currentPlayer.getMoneyWon();
+        this.currentPlayerTurn = currentPlayer.isTurnOver();
     }
 
 
@@ -58,9 +57,7 @@ public class CurrentPlayer {
         currentPlayer.setTurnOver(curturn);
 }
 
-    public int endReturn(){
-        return -1;
-    }
+
     @Override
     public String toString() {
         return "CurrentPlayer{" +
