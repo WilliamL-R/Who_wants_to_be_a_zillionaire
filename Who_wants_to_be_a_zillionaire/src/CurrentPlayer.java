@@ -6,19 +6,25 @@ public class CurrentPlayer {
     private Player currentPlayer;
     private String currentPlayerName;
     private int currentPlayerMoney;
+    private boolean currentPlayerTurn;
     /*
        TODO:Popup with question
        TODO:Question wrong, end game for player and search for new player
        TODO:Question right, go back to main screen and add money to player's Money Won
        TODO:End Screen with each player's money won and overall winner.
-       https://teamtreehouse.com/community/make-a-text-file-of-questions-into-a-quiz-using-java-filereader
-       https://stackoverflow.com/questions/4716503/reading-a-plain-text-file-in-java
+       //TODO: End Game using null pointer
      */
 
     public CurrentPlayer(PlayerList playerList){
         this.currentPlayer = playerList.playerTurn();
-        this.currentPlayerName = currentPlayer.getPlayerName();
-        this.currentPlayerMoney = currentPlayer.getMoneyWon();
+        System.out.println(currentPlayer);
+        if (currentPlayer != null){
+            this.currentPlayerName = currentPlayer.getPlayerName();
+            this.currentPlayerMoney = currentPlayer.getMoneyWon();
+            this.currentPlayerTurn = currentPlayer.isTurnOver();
+        }else{
+            endReturn();
+        }
     }
 
 
@@ -34,8 +40,34 @@ public class CurrentPlayer {
         return currentPlayerMoney;
     }
 
-    public void setCurrentPlayerMoney(int currentPlayerMoney) {
-        this.currentPlayerMoney = currentPlayerMoney;
+    public void setCurrentPlayerMoney() {
+
+        if ( currentPlayerMoney == 0) {
+            this.currentPlayerMoney = 100;
+        } else if ( currentPlayerMoney >= 100) {
+            int increasedMoney = currentPlayerMoney * 2;
+            this.currentPlayerMoney = increasedMoney;
+        }
     }
 
+    public boolean isCurrentPlayerTurn() {
+        return currentPlayerTurn;
+    }
+
+    public void setCurrentPlayerTurnOver(boolean curturn) {
+        currentPlayer.setTurnOver(curturn);
+}
+
+    public int endReturn(){
+        return -1;
+    }
+    @Override
+    public String toString() {
+        return "CurrentPlayer{" +
+                "currentPlayer=" + currentPlayer +
+                ", currentPlayerName='" + currentPlayerName + '\'' +
+                ", currentPlayerMoney=" + currentPlayerMoney +
+                ", currentPlayerTurn=" + currentPlayerTurn +
+                '}';
+    }
 }
