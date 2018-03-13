@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
+import java.util.Arrays;
 
 public class MainGUI {
 
@@ -32,7 +33,7 @@ public class MainGUI {
     private JButton answer2;
     private JButton answer3;
     private JButton answer4;
-    private JButton help1;
+    private JButton halfandhalf;
     private JButton help2;
     private JLabel questionLabel;
     private CurrentPlayer curplay;
@@ -40,7 +41,7 @@ public class MainGUI {
     private QuizQuestions quiz;
     private CurrentQuestion currq;
 
-    private int endInt;
+    private int[] todisable;
 
 
     public MainGUI() {
@@ -127,10 +128,10 @@ public class MainGUI {
                 QuestionPanel.setVisible(true);
                 genQuestion();
                 questionLabel.setText(currq.getCurrentQString());
-                answer1.setText(currq.getCurrentAnswers(0));
-                answer2.setText(currq.getCurrentAnswers(1));
-                answer3.setText(currq.getCurrentAnswers(2));
-                answer4.setText(currq.getCurrentAnswers(3));
+                answer1.setText(currq.getCurrentAnswerLocation(0));
+                answer2.setText(currq.getCurrentAnswerLocation(1));
+                answer3.setText(currq.getCurrentAnswerLocation(2));
+                answer4.setText(currq.getCurrentAnswerLocation(3));
 
 
             }
@@ -139,8 +140,12 @@ public class MainGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int answer = 1;
+                if(todisable[0] == answer || todisable[1] == answer){
+                    answer1.setEnabled(false);
+                }
                 boolean rightAnswer = currq.checkAnswer(answer);
                 if (rightAnswer == true) {
+                    JOptionPane.showMessageDialog(MainPanel, "The question is correct!");
                     curplay.setCurrentPlayerMoney();
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
@@ -163,6 +168,7 @@ public class MainGUI {
                 int answer = 2;
                 boolean rightAnswer = currq.checkAnswer(answer);
                 if (rightAnswer == true) {
+                    JOptionPane.showMessageDialog(MainPanel, "The question is correct!");
                     curplay.setCurrentPlayerMoney();
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
@@ -183,8 +189,12 @@ public class MainGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int answer = 3;
+                if(todisable[0] == answer || todisable[1] == answer){
+                    answer3.setEnabled(false);
+                }
                 boolean rightAnswer = currq.checkAnswer(answer);
                 if (rightAnswer == true) {
+                    JOptionPane.showMessageDialog(MainPanel, "The question is correct!");
                     curplay.setCurrentPlayerMoney();
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
@@ -205,8 +215,12 @@ public class MainGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int answer = 4;
+                if(todisable[0] == answer || todisable[1] == answer){
+                    answer4.setEnabled(false);
+                }
                 boolean rightAnswer = currq.checkAnswer(answer);
                 if (rightAnswer == true) {
+                    JOptionPane.showMessageDialog(MainPanel, "The question is correct!");
                     curplay.setCurrentPlayerMoney();
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
@@ -220,6 +234,52 @@ public class MainGUI {
                     System.out.println(curplay);
                     playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
                     currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                }
+            }
+        });
+        halfandhalf.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                halfandhalf.setEnabled(false);
+                todisable = currq.halfAndHalf(currq.getCurrentAnswers(), currq.getCurrentCorrectAnswer());
+                String disable1="answer"+Integer.toString(todisable[0]);
+                String disable2="answer"+Integer.toString(todisable[1]);
+                answer1.setName("answer1");
+                answer2.setName("answer2");
+                answer3.setName("answer3");
+                answer4.setName("answer4");
+                String[] ans ={answer1.getName(),answer2.getName(),answer3.getName(),answer4.getName()};
+
+//                for(int i=0; i < 4; i++){
+//                    if((ans[i]).equals(disable1)||ans[i].equals(disable2)){
+//                        System.out.println(ans[i]);
+//
+//
+//                    }
+//                }
+                for(int i=0; i < 3; i++) {
+                    if (ans[0].equals(disable1) || ans[0].equals(disable2)) {
+                        if(answer1.isEnabled()){
+                            answer1.setEnabled(false);
+                        }
+                    }
+                    if (ans[1].equals(disable1) || ans[1].equals(disable2)) {
+                        if(answer2.isEnabled()) {
+                            answer2.setEnabled(false);
+                        }
+                    }
+                    if (ans[2].equals(disable1) || ans[2].equals(disable2)) {
+                        if(answer3.isEnabled()) {
+                            answer3.setEnabled(false);
+                        }
+                    }
+                    if (ans[3].equals(disable1) || ans[3].equals(disable2)) {
+                        if(answer4.isEnabled()) {
+                            answer4.setEnabled(false);
+                        }
+                    }
+
+//                JButton ((disable1)).setEnabled(false);
                 }
             }
         });

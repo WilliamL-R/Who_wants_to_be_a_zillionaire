@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class CurrentQuestion {
 
     private Question currentQobject;
@@ -24,9 +26,13 @@ public class CurrentQuestion {
         this.currentQString = currentQString;
     }
 
-    public String getCurrentAnswers(int indexLocation) {
+    public String getCurrentAnswerLocation(int indexLocation) {
        String answer = currentAnswers[indexLocation];
         return answer;
+    }
+
+    public String[] getCurrentAnswers(){
+        return currentAnswers;
     }
 
     public int getCurrentCorrectAnswer() {
@@ -43,6 +49,25 @@ public class CurrentQuestion {
 
     public void setCurrentQuestionAnswered(boolean currentQuestionAnswered) {
         this.currentQuestionAnswered = currentQuestionAnswered;
+    }
+
+    public int[] halfAndHalf(String[] curAnswers, int currentcorans){
+//        currentAnswers = curAnswers;
+//        currentCorrectAnswer = currentcorans;
+
+
+        Random rand = new Random();
+        int random = rand.nextInt(4);
+        int[] anstodisable = new int[2];
+
+        for(int i=0; i < 2; i++){
+           while(random == currentcorans || random == anstodisable[0]){
+             random = rand.nextInt(4) + 1;
+           }
+           anstodisable[i] = random;
+//           System.out.println(random);
+        }
+        return anstodisable;
     }
 
     public boolean checkAnswer(int ans){
