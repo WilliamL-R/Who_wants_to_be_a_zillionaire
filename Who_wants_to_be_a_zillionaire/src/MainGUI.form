@@ -13,7 +13,7 @@
         <constraints/>
         <properties>
           <enabled value="true"/>
-          <visible value="false"/>
+          <visible value="true"/>
         </properties>
         <border type="none"/>
         <children>
@@ -289,7 +289,9 @@
       </grid>
       <grid id="72344" binding="QuestionPanel" layout-manager="GridBagLayout">
         <constraints/>
-        <properties/>
+        <properties>
+          <visible value="false"/>
+        </properties>
         <border type="none"/>
         <children>
           <hspacer id="d937e">
@@ -349,13 +351,13 @@
               <text value="Half and Half"/>
             </properties>
           </component>
-          <component id="5fd64" class="javax.swing.JButton" binding="help2">
+          <component id="5fd64" class="javax.swing.JButton" binding="askthepublic">
             <constraints>
               <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
-              <text value="help2"/>
+              <text value="Ask the Public"/>
             </properties>
           </component>
           <component id="bb975" class="javax.swing.JLabel" binding="questionLabel">

@@ -51,11 +51,7 @@ public class CurrentQuestion {
         this.currentQuestionAnswered = currentQuestionAnswered;
     }
 
-    public int[] halfAndHalf(String[] curAnswers, int currentcorans){
-//        currentAnswers = curAnswers;
-//        currentCorrectAnswer = currentcorans;
-
-
+    public int[] halfAndHalf( int currentcorans){
         Random rand = new Random();
         int random = rand.nextInt(4);
         int[] anstodisable = new int[2];
@@ -65,14 +61,21 @@ public class CurrentQuestion {
              random = rand.nextInt(4) + 1;
            }
            anstodisable[i] = random;
-//           System.out.println(random);
         }
         return anstodisable;
     }
 
+    public int[] askThePublic(){
+        Random rand = new Random();
+        int percent1 = rand.nextInt(101);
+        int percent2 = rand.nextInt(101 - percent1);
+        int percent3 = rand.nextInt(101 - percent1 - percent2);
+        int percent4 = 100 - percent1 - percent2 - percent3;
+        int[] percentages = {percent1,percent2,percent3,percent4};
+        return percentages;
+    }
+
     public boolean checkAnswer(int ans){
-//        System.out.println(ans);
-//        System.out.println(currentCorrectAnswer);
         if (ans == currentCorrectAnswer){
            currentQobject.setQuestionAnswered(true);
            return true;
@@ -82,11 +85,6 @@ public class CurrentQuestion {
             currentQobject.setQuestionAnswered(false);
             return false;
         }
-        //if ans == currentCorrectAnswer
-        //add to player money
-        //question answered to true
-        //if ans != currentCorrectAnswer
-        //end turn
     }
 
 

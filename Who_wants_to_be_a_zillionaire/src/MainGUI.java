@@ -34,7 +34,7 @@ public class MainGUI {
     private JButton answer3;
     private JButton answer4;
     private JButton halfandhalf;
-    private JButton help2;
+    private JButton askthepublic;
     private JLabel questionLabel;
     private CurrentPlayer curplay;
     private PlayerList playerList;
@@ -42,16 +42,10 @@ public class MainGUI {
     private CurrentQuestion currq;
 
     private int[] todisable;
+    private int[] perctodisplay;
 
 
     public MainGUI() {
-
-        RulesPanel.setVisible(false);
-        PlayerPanel.setVisible(false);
-        CategoryPanel.setVisible(false);
-        QuestionPanel.setVisible(false);
-        MenuPanel.setVisible(true);
-
 
         gameButton.addActionListener(new ActionListener() {
             @Override
@@ -132,17 +126,16 @@ public class MainGUI {
                 answer2.setText(currq.getCurrentAnswerLocation(1));
                 answer3.setText(currq.getCurrentAnswerLocation(2));
                 answer4.setText(currq.getCurrentAnswerLocation(3));
-
-
+                answer1.setEnabled(true);
+                answer2.setEnabled(true);
+                answer3.setEnabled(true);
+                answer4.setEnabled(true);
             }
         });
         answer1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int answer = 1;
-                if(todisable[0] == answer || todisable[1] == answer){
-                    answer1.setEnabled(false);
-                }
                 boolean rightAnswer = currq.checkAnswer(answer);
                 if (rightAnswer == true) {
                     JOptionPane.showMessageDialog(MainPanel, "The question is correct!");
@@ -241,7 +234,7 @@ public class MainGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 halfandhalf.setEnabled(false);
-                todisable = currq.halfAndHalf(currq.getCurrentAnswers(), currq.getCurrentCorrectAnswer());
+                todisable = currq.halfAndHalf(currq.getCurrentCorrectAnswer());
                 String disable1="answer"+Integer.toString(todisable[0]);
                 String disable2="answer"+Integer.toString(todisable[1]);
                 answer1.setName("answer1");
@@ -250,13 +243,6 @@ public class MainGUI {
                 answer4.setName("answer4");
                 String[] ans ={answer1.getName(),answer2.getName(),answer3.getName(),answer4.getName()};
 
-//                for(int i=0; i < 4; i++){
-//                    if((ans[i]).equals(disable1)||ans[i].equals(disable2)){
-//                        System.out.println(ans[i]);
-//
-//
-//                    }
-//                }
                 for(int i=0; i < 3; i++) {
                     if (ans[0].equals(disable1) || ans[0].equals(disable2)) {
                         if(answer1.isEnabled()){
@@ -279,8 +265,16 @@ public class MainGUI {
                         }
                     }
 
-//                JButton ((disable1)).setEnabled(false);
                 }
+            }
+        });
+        askthepublic.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                perctodisplay = currq.askThePublic();
+                System.out.println(Arrays.toString(perctodisplay));
+                // TODO: Sort the Array so the right answer gets the most percentage
+                // TODO: Look into generating a chart.
             }
         });
     }
@@ -295,7 +289,7 @@ public class MainGUI {
         //TODO: End Game using null pointer
         curplay = new CurrentPlayer(playerList);
         if (curplay.getCurrentPlayer() == null) {
-            endReturn();
+            gameOverScreen();
         }
     }
 
@@ -310,12 +304,6 @@ public class MainGUI {
         System.out.println("You have lost the game!");
         System.exit(0);
     }
-
-
-    public void endReturn(){
-        gameOverScreen();
-    }
-
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("MainGUI");
