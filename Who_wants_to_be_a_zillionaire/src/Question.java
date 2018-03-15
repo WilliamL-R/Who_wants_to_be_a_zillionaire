@@ -6,6 +6,7 @@ public class Question implements Serializable {
     private String question;
     private String[] answers;
     private int correctAnswer;
+    private int questionPercentage;
     private boolean questionAnswered;
 
     public Question(String question, String[] answers, int correctAnswer){

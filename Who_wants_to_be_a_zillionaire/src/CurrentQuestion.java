@@ -1,3 +1,8 @@
+import javax.swing.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 public class CurrentQuestion {
@@ -6,6 +11,7 @@ public class CurrentQuestion {
     private String currentQString;
     private String[] currentAnswers;
     private int currentCorrectAnswer;
+    private int currentQuestionPercentage;
     private boolean currentQuestionAnswered;
 
 
@@ -65,24 +71,46 @@ public class CurrentQuestion {
         return anstodisable;
     }
 
-    public int[] askThePublic(){
+    public void askThePublic(ArrayList<JLabel> labels){
         Random rand = new Random();
-        int percent1 = rand.nextInt(101);
-        int percent2 = rand.nextInt(101 - percent1);
-        int percent3 = rand.nextInt(101 - percent1 - percent2);
-        int percent4 = 100 - percent1 - percent2 - percent3;
-        int[] percentages = {percent1,percent2,percent3,percent4};
-        return percentages;
+        Integer percent1 = rand.nextInt(101);
+        Integer percent2 = rand.nextInt(101 - percent1);
+        Integer percent3 = rand.nextInt(101 - percent1 - percent2);
+        Integer percent4 = 100 - percent1 - percent2 - percent3;
+        Integer[] percentages = {percent1,percent2,percent3,percent4};
+
+        ArrayList<Integer> possiblePerc = new ArrayList<>(Arrays.asList(percentages));
+        ArrayList<String> potAnswers = new ArrayList<>(Arrays.asList(currentAnswers));
+        Integer highestValue = Collections.max(new ArrayList<>(Arrays.asList(percentages)));
+
+
+        for(int i=0; i<percentages.length; i++){
+            boolean rightAnswer = checkAnswer(i+1);
+            if(rightAnswer == true){
+                Collections.swap(possiblePerc,
+                potAnswers.indexOf(getCurrentAnswerLocation(currentCorrectAnswer)),
+                possiblePerc.indexOf(highestValue));
+                System.out.println(potAnswers.indexOf(getCurrentAnswerLocation(currentCorrectAnswer)));
+                System.out.println(possiblePerc.indexOf(highestValue));
+
+            }
+            //i = highestValue;
+            //System.out.println(possiblePerc.indexOf(highestValue));
+        }
+        for(int i = 0; i<labels.size(); i++){
+            labels.get(i).setText(possiblePerc.get(i).toString());
+
+        }
     }
+
 
     public boolean checkAnswer(int ans){
         if (ans == currentCorrectAnswer){
            currentQobject.setQuestionAnswered(true);
            return true;
 
-
         }else{
-            currentQobject.setQuestionAnswered(false);
+            currentQobject.setQuestionAnswered(true);
             return false;
         }
     }

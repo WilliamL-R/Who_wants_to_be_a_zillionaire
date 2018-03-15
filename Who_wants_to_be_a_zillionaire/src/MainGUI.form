@@ -381,6 +381,42 @@
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
           </vspacer>
+          <component id="eaabe" class="javax.swing.JLabel" binding="answer2percent">
+            <constraints>
+              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Percent 2"/>
+            </properties>
+          </component>
+          <component id="f360d" class="javax.swing.JLabel" binding="answer1percent">
+            <constraints>
+              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Percent 1"/>
+            </properties>
+          </component>
+          <component id="fb881" class="javax.swing.JLabel" binding="answer3percent">
+            <constraints>
+              <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Percent 3"/>
+            </properties>
+          </component>
+          <component id="f1bcf" class="javax.swing.JLabel" binding="answer4percent">
+            <constraints>
+              <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Percent 4"/>
+            </properties>
+          </component>
         </children>
       </grid>
     </children>

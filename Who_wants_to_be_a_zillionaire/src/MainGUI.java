@@ -2,7 +2,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class MainGUI {
 
@@ -36,13 +38,16 @@ public class MainGUI {
     private JButton halfandhalf;
     private JButton askthepublic;
     private JLabel questionLabel;
+    private JLabel answer2percent;
+    private JLabel answer1percent;
+    private JLabel answer3percent;
+    private JLabel answer4percent;
     private CurrentPlayer curplay;
     private PlayerList playerList;
     private QuizQuestions quiz;
     private CurrentQuestion currq;
 
     private int[] todisable;
-    private int[] perctodisplay;
 
 
     public MainGUI() {
@@ -271,8 +276,7 @@ public class MainGUI {
         askthepublic.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                perctodisplay = currq.askThePublic();
-                System.out.println(Arrays.toString(perctodisplay));
+            currq.askThePublic(new ArrayList<>(Arrays.asList(answer1percent,answer2percent,answer3percent,answer4percent)));
                 // TODO: Sort the Array so the right answer gets the most percentage
                 // TODO: Look into generating a chart.
             }
