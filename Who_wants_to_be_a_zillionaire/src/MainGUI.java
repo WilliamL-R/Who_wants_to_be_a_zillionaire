@@ -26,8 +26,8 @@ public class MainGUI {
     private JLabel categoryLogo;
     private JLabel playerActiveLabel;
     private JButton generalKnowledgeSelect;
-    private JButton category2Select;
-    private JButton category3Select;
+    private JButton videoGameSelect;
+    private JButton musicSelect;
     private JLabel currentMoney;
     private JButton startGame;
     private JPanel QuestionPanel;
@@ -42,12 +42,17 @@ public class MainGUI {
     private JLabel answer1percent;
     private JLabel answer3percent;
     private JLabel answer4percent;
+    private JPanel GameOverPanel;
+    private JLabel gameoverlogo;
+    private JButton button1;
+    private JList endPlayerList;
     private CurrentPlayer curplay;
     private PlayerList playerList;
     private QuizQuestions quiz;
     private CurrentQuestion currq;
 
     private int[] todisable;
+    ArrayList<JLabel> percentLabel = new ArrayList<>(Arrays.asList(answer1percent,answer2percent,answer3percent,answer4percent));
 
 
     public MainGUI() {
@@ -125,7 +130,7 @@ public class MainGUI {
             public void actionPerformed(ActionEvent e) {
                 CategoryPanel.setVisible(false);
                 QuestionPanel.setVisible(true);
-                genQuestion();
+                genQuestion(0);
                 questionLabel.setText(currq.getCurrentQString());
                 answer1.setText(currq.getCurrentAnswerLocation(0));
                 answer2.setText(currq.getCurrentAnswerLocation(1));
@@ -137,6 +142,43 @@ public class MainGUI {
                 answer4.setEnabled(true);
             }
         });
+
+        videoGameSelect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CategoryPanel.setVisible(false);
+                QuestionPanel.setVisible(true);
+                genQuestion(1);
+                questionLabel.setText(currq.getCurrentQString());
+                answer1.setText(currq.getCurrentAnswerLocation(0));
+                answer2.setText(currq.getCurrentAnswerLocation(1));
+                answer3.setText(currq.getCurrentAnswerLocation(2));
+                answer4.setText(currq.getCurrentAnswerLocation(3));
+                answer1.setEnabled(true);
+                answer2.setEnabled(true);
+                answer3.setEnabled(true);
+                answer4.setEnabled(true);
+            }
+        });
+
+        musicSelect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CategoryPanel.setVisible(false);
+                QuestionPanel.setVisible(true);
+                genQuestion(2);
+                questionLabel.setText(currq.getCurrentQString());
+                answer1.setText(currq.getCurrentAnswerLocation(0));
+                answer2.setText(currq.getCurrentAnswerLocation(1));
+                answer3.setText(currq.getCurrentAnswerLocation(2));
+                answer4.setText(currq.getCurrentAnswerLocation(3));
+                answer1.setEnabled(true);
+                answer2.setEnabled(true);
+                answer3.setEnabled(true);
+                answer4.setEnabled(true);
+            }
+        });
+
         answer1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -145,16 +187,26 @@ public class MainGUI {
                 if (rightAnswer == true) {
                     JOptionPane.showMessageDialog(MainPanel, "The question is correct!");
                     curplay.setCurrentPlayerMoney();
+                    clearLabels();
+                    currq.setCurrentQuestionAnswered(true);
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
-                    currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                    if(curplay.getCurrentPlayerMoney() >= 1638400){
+                        JOptionPane.showMessageDialog(MainPanel, "You have won the game!");
+                        curplay.setCurrentPlayerTurnOver(true);
+                        setCurrentPlayer();
+                        playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
+                        currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                    }else {
+                        currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                    }
                 } else {
                     JOptionPane.showMessageDialog(MainPanel, "You have lost the game.");
                     curplay.setCurrentPlayerTurnOver(true);
+                    clearLabels();
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
                     setCurrentPlayer();
-                    System.out.println(curplay);
                     playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
                     currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
                 }
@@ -168,16 +220,26 @@ public class MainGUI {
                 if (rightAnswer == true) {
                     JOptionPane.showMessageDialog(MainPanel, "The question is correct!");
                     curplay.setCurrentPlayerMoney();
+                    clearLabels();
+                    currq.setCurrentQuestionAnswered(true);
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
-                    currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                    if(curplay.getCurrentPlayerMoney() >= 1638400){
+                        JOptionPane.showMessageDialog(MainPanel, "You have won the game!");
+                        curplay.setCurrentPlayerTurnOver(true);
+                        setCurrentPlayer();
+                        playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
+                        currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                    }else {
+                        currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                    }
                 } else {
                     JOptionPane.showMessageDialog(MainPanel, "You have lost the game.");
+                    clearLabels();
                     System.out.println(curplay.isCurrentPlayerTurn());
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
                     setCurrentPlayer();
-                    System.out.println(curplay);
                     playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
                     currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
                 }
@@ -187,23 +249,30 @@ public class MainGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int answer = 3;
-                if(todisable[0] == answer || todisable[1] == answer){
-                    answer3.setEnabled(false);
-                }
                 boolean rightAnswer = currq.checkAnswer(answer);
                 if (rightAnswer == true) {
                     JOptionPane.showMessageDialog(MainPanel, "The question is correct!");
                     curplay.setCurrentPlayerMoney();
+                    clearLabels();
+                    currq.setCurrentQuestionAnswered(true);
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
-                    currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                    if(curplay.getCurrentPlayerMoney() >= 1638400){
+                        JOptionPane.showMessageDialog(MainPanel, "You have won the game!");
+                        curplay.setCurrentPlayerTurnOver(true);
+                        setCurrentPlayer();
+                        playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
+                        currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                    }else {
+                        currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                    }
                 } else {
                     JOptionPane.showMessageDialog(MainPanel, "You have lost the game.");
+                    clearLabels();
                     curplay.setCurrentPlayerTurnOver(true);
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
                     setCurrentPlayer();
-                    System.out.println(curplay);
                     playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
                     currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
                 }
@@ -213,23 +282,30 @@ public class MainGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int answer = 4;
-                if(todisable[0] == answer || todisable[1] == answer){
-                    answer4.setEnabled(false);
-                }
                 boolean rightAnswer = currq.checkAnswer(answer);
                 if (rightAnswer == true) {
                     JOptionPane.showMessageDialog(MainPanel, "The question is correct!");
                     curplay.setCurrentPlayerMoney();
+                    clearLabels();
+                    currq.setCurrentQuestionAnswered(true);
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
-                    currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                    if(curplay.getCurrentPlayerMoney() >= 1638400){
+                        JOptionPane.showMessageDialog(MainPanel, "You have won the game!");
+                        curplay.setCurrentPlayerTurnOver(true);
+                        setCurrentPlayer();
+                        playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
+                        currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                    }else {
+                        currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                    }
                 } else {
                     JOptionPane.showMessageDialog(MainPanel, "You have lost the game.");
+                    clearLabels();
                     curplay.setCurrentPlayerTurnOver(true);
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
                     setCurrentPlayer();
-                    System.out.println(curplay);
                     playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
                     currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
                 }
@@ -276,11 +352,21 @@ public class MainGUI {
         askthepublic.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            currq.askThePublic(new ArrayList<>(Arrays.asList(answer1percent,answer2percent,answer3percent,answer4percent)));
-                // TODO: Sort the Array so the right answer gets the most percentage
-                // TODO: Look into generating a chart.
+                askthepublic.setEnabled(false);
+                for(JLabel percentLabel : percentLabel){
+                    percentLabel.setVisible(true);
+                }
+                currq.askThePublic(percentLabel);
+
+
             }
         });
+    }
+
+    public void clearLabels(){
+        for(JLabel percentLabel : percentLabel){
+            percentLabel.setVisible(false);
+        }
     }
 
     public void createPlayerList() {
@@ -289,24 +375,28 @@ public class MainGUI {
         startPlayersList.setModel(playerList);
     }
 
+    public void updatePlayerList(){
+        endPlayerList.setModel(playerList);
+    }
+
+
     public void setCurrentPlayer() {
-        //TODO: End Game using null pointer
         curplay = new CurrentPlayer(playerList);
         if (curplay.getCurrentPlayer() == null) {
+            updatePlayerList();
             gameOverScreen();
         }
     }
 
-    public void genQuestion() {
+    public void genQuestion(int categoryInt) {
         quiz = new QuizQuestions();
-        quiz.QuizQuestions();
-        currq = new CurrentQuestion(quiz);
+        quiz.QuizQuestions(categoryInt);
+        currq = new CurrentQuestion(quiz,categoryInt);
     }
 
     public void gameOverScreen() {
-
-        System.out.println("You have lost the game!");
-        System.exit(0);
+        CategoryPanel.setVisible(false);
+        GameOverPanel.setVisible(true);
     }
 
     public static void main(String[] args) {

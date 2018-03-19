@@ -8,12 +8,22 @@ import java.util.Scanner;
 
 public class QuizQuestions {
 
+    private ArrayList<ArrayList<Question>> questionTopics = new ArrayList<ArrayList<Question>>();
+
     private ArrayList<Question> generalQuestions = new ArrayList<>();
+    private ArrayList<Question> gameQuestions = new ArrayList<>();
+    private ArrayList<Question> musicQuestions = new ArrayList<>();
 
 
-    public void QuizQuestions(){
+    private String[] fileNames = {"src/generalQuestions.txt", "src/gameQuestions.txt", "src/musicQuestions.txt"};
+
+
+
+    public void QuizQuestions(int categoryInt){
         try{
-            FileReader file = new FileReader("generalQuestions.txt");
+            initialiseLists();
+            String fileName = fileNames[categoryInt];
+            FileReader file = new FileReader(fileName);
             BufferedReader reader = new BufferedReader(file);
             Scanner scanner = new Scanner(reader);
 
@@ -32,7 +42,7 @@ public class QuizQuestions {
 
                     if (line.contains("?")){ // stores the question
                         question = line;
-                    } else if (counter == 0 && line.length() == 1){ // stores the numberOfAnswers
+                    } else if (counter == 0 && line.length() == 1){ //   the numberOfAnswers
                         numberOfAnswers = Integer.valueOf(line);
                         answers = new String[numberOfAnswers];
                     } else if (line.contains(")")){ // stores the answers
@@ -42,10 +52,11 @@ public class QuizQuestions {
                     }
                 } while (correctAnswer == 0);
 
-                generalQuestions.add(new Question(question, answers, correctAnswer));
+                questionTopics.get(categoryInt).add(new Question(question, answers, correctAnswer));
                 numberOfAnswers = 0;
                 counter = 0;
                 correctAnswer = 0;
+
 
             }while (scanner.hasNext());
 
@@ -59,22 +70,35 @@ public class QuizQuestions {
 
 
 
-    public Question generateGeneralQuestion(){
+    public Question generateQuestion(int categoryInt){
         Question questionN;
         Random rand = new Random();
-        int indexLocation = rand.nextInt((generalQuestions.size() - 0)+ 0);
-        questionN = (Question) generalQuestions.get(indexLocation);
+
+        int indexLocation = rand.nextInt((questionTopics.get(categoryInt).size() - 0)+ 0);
+        questionN = (Question) questionTopics.get(categoryInt).get(indexLocation);
         while (questionN.isQuestionAnswered() == true){
-            indexLocation = rand.nextInt((generalQuestions.size() - 0)+ 0);
-            questionN = (Question) generalQuestions.get(indexLocation);
+            indexLocation = rand.nextInt((questionTopics.get(categoryInt).size() - 0)+ 0);
+            questionN = (Question) questionTopics.get(categoryInt).get(indexLocation);
         }
         if (indexLocation == -1){
             return null;
         }else{
-            return (Question)generalQuestions.get(indexLocation);
+            System.out.println(questionN.isQuestionAnswered());
+            return (Question) questionTopics.get(categoryInt).get(indexLocation);
         }
     }
 
 
+    public void initialiseLists(){
+        int i = 0;
+        if (i == 1){
+            return;
+        }else{
+            questionTopics.add(generalQuestions);
+            questionTopics.add(gameQuestions);
+            questionTopics.add(musicQuestions);
+            i++;
+        }
+    }
 }
 

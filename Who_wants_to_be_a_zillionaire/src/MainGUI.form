@@ -5,6 +5,7 @@
       <xy x="20" y="20" width="1698" height="400"/>
     </constraints>
     <properties>
+      <minimumSize width="851" height="255"/>
       <visible value="true"/>
     </properties>
     <border type="none"/>
@@ -234,22 +235,24 @@
               <text value="General Knowledge"/>
             </properties>
           </component>
-          <component id="1a5a3" class="javax.swing.JButton" binding="category2Select">
+          <component id="1a5a3" class="javax.swing.JButton" binding="videoGameSelect">
             <constraints>
               <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
-              <text value="Category2"/>
+              <label value="Video Games"/>
+              <text value="Video Games"/>
             </properties>
           </component>
-          <component id="c49f5" class="javax.swing.JButton" binding="category3Select">
+          <component id="c49f5" class="javax.swing.JButton" binding="musicSelect">
             <constraints>
               <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
-              <text value="Category3"/>
+              <label value="Music"/>
+              <text value="Music"/>
             </properties>
           </component>
           <hspacer id="198e3">
@@ -383,38 +386,108 @@
           </vspacer>
           <component id="eaabe" class="javax.swing.JLabel" binding="answer2percent">
             <constraints>
-              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="8" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
               <text value="Percent 2"/>
+              <visible value="false"/>
             </properties>
           </component>
           <component id="f360d" class="javax.swing.JLabel" binding="answer1percent">
             <constraints>
-              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="7" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
               <text value="Percent 1"/>
+              <visible value="false"/>
             </properties>
           </component>
           <component id="fb881" class="javax.swing.JLabel" binding="answer3percent">
             <constraints>
-              <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="9" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
               <text value="Percent 3"/>
+              <visible value="false"/>
             </properties>
           </component>
           <component id="f1bcf" class="javax.swing.JLabel" binding="answer4percent">
             <constraints>
-              <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="10" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
               <text value="Percent 4"/>
+              <visible value="false"/>
+            </properties>
+          </component>
+          <vspacer id="6a3ed">
+            <constraints>
+              <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+          </vspacer>
+        </children>
+      </grid>
+      <grid id="31224" binding="GameOverPanel" layout-manager="GridBagLayout">
+        <constraints/>
+        <properties>
+          <visible value="false"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <hspacer id="fd522">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+          </hspacer>
+          <component id="422cb" class="javax.swing.JButton" binding="button1" default-binding="true">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Button"/>
+            </properties>
+          </component>
+          <vspacer id="6ff96">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+          </vspacer>
+          <vspacer id="89729">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+          </vspacer>
+          <scrollpane id="cb0df">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="ca8ef" class="javax.swing.JList" binding="endPlayerList">
+                <constraints/>
+                <properties/>
+              </component>
+            </children>
+          </scrollpane>
+          <component id="7d013" class="javax.swing.JLabel" binding="gameoverlogo">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="logo"/>
+              <visible value="true"/>
             </properties>
           </component>
         </children>

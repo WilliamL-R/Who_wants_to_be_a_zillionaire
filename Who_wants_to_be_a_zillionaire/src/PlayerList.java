@@ -1,4 +1,5 @@
 import javax.swing.DefaultListModel;
+import java.util.Collections;
 
 public class PlayerList extends DefaultListModel<Player> {
 
@@ -34,7 +35,6 @@ public class PlayerList extends DefaultListModel<Player> {
     }
 
     public Player playerTurn(){
-//        System.out.println("I'm in player turn!");
         Player playN;
         int indexLocation = -1;
         for (int i = 0;i<super.size();i++){
@@ -45,10 +45,10 @@ public class PlayerList extends DefaultListModel<Player> {
             }
         }
         if (indexLocation == -1){
-            System.out.println("I return null");
             return null;
         }else{
             return (Player)super.elementAt(indexLocation);
         }
     }
+
 }

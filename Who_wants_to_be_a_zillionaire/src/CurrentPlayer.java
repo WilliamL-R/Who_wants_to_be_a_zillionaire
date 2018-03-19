@@ -43,9 +43,15 @@ public class CurrentPlayer {
 
         if ( currentPlayerMoney == 0) {
             this.currentPlayerMoney = 100;
+           currentPlayer.setMoneyWon(currentPlayerMoney);
+        } else if (currentPlayerMoney == 1638400) {
+            currentPlayer.setMoneyWon(currentPlayerMoney);
+            return;
         } else if ( currentPlayerMoney >= 100) {
             int increasedMoney = currentPlayerMoney * 2;
             this.currentPlayerMoney = increasedMoney;
+            currentPlayer.setMoneyWon(currentPlayerMoney);
+
         }
     }
 

@@ -40,7 +40,7 @@ public class Player implements Serializable {
 
     @Override
     public String toString() {
-        return playerName;
+        return playerName + " has Won: £" + moneyWon;
     }
 
 }

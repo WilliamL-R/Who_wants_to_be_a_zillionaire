@@ -11,13 +11,12 @@ public class CurrentQuestion {
     private String currentQString;
     private String[] currentAnswers;
     private int currentCorrectAnswer;
-    private int currentQuestionPercentage;
     private boolean currentQuestionAnswered;
 
 
 
-    public CurrentQuestion(QuizQuestions quizQuestions){
-        this.currentQobject = quizQuestions.generateGeneralQuestion();
+    public CurrentQuestion(QuizQuestions quizQuestions, int categoryInt){
+        this.currentQobject = quizQuestions.generateQuestion(categoryInt);
         this.currentQString = currentQobject.getQuestion();
         this.currentAnswers = currentQobject.getAnswers();
         this.currentCorrectAnswer = currentQobject.getCorrectAnswer();
@@ -55,6 +54,7 @@ public class CurrentQuestion {
 
     public void setCurrentQuestionAnswered(boolean currentQuestionAnswered) {
         this.currentQuestionAnswered = currentQuestionAnswered;
+        currentQobject.setQuestionAnswered(currentQuestionAnswered);
     }
 
     public int[] halfAndHalf( int currentcorans){
@@ -73,36 +73,43 @@ public class CurrentQuestion {
 
     public void askThePublic(ArrayList<JLabel> labels){
         Random rand = new Random();
+        int correctperc = -1;
         Integer percent1 = rand.nextInt(101);
         Integer percent2 = rand.nextInt(101 - percent1);
         Integer percent3 = rand.nextInt(101 - percent1 - percent2);
         Integer percent4 = 100 - percent1 - percent2 - percent3;
         Integer[] percentages = {percent1,percent2,percent3,percent4};
+        String[] PERCENTAGETEXT = {"Answer 1: ", "Answer 2: ", "Answer 3: ", "Answer 4: "};
+
 
         ArrayList<Integer> possiblePerc = new ArrayList<>(Arrays.asList(percentages));
-        ArrayList<String> potAnswers = new ArrayList<>(Arrays.asList(currentAnswers));
         Integer highestValue = Collections.max(new ArrayList<>(Arrays.asList(percentages)));
 
 
-        for(int i=0; i<percentages.length; i++){
-            boolean rightAnswer = checkAnswer(i+1);
+
+        for(int i=0; i<=percentages.length; i++){
+            boolean rightAnswer = checkAnswer(i);
             if(rightAnswer == true){
                 Collections.swap(possiblePerc,
-                potAnswers.indexOf(getCurrentAnswerLocation(currentCorrectAnswer)),
+                 i-1 ,
                 possiblePerc.indexOf(highestValue));
-                System.out.println(potAnswers.indexOf(getCurrentAnswerLocation(currentCorrectAnswer)));
-                System.out.println(possiblePerc.indexOf(highestValue));
 
+                labels.get(i-1).setText(PERCENTAGETEXT[i-1]+ highestValue.toString() + "%");
+
+                correctperc = i - 1;
+                break;
             }
-            //i = highestValue;
-            //System.out.println(possiblePerc.indexOf(highestValue));
+
         }
         for(int i = 0; i<labels.size(); i++){
-            labels.get(i).setText(possiblePerc.get(i).toString());
+            if (i == correctperc){
+                continue;
+            }else{
+                labels.get(i).setText(PERCENTAGETEXT[i] + possiblePerc.get(i).toString() + "%");
+            }
 
         }
     }
-
 
     public boolean checkAnswer(int ans){
         if (ans == currentCorrectAnswer){
