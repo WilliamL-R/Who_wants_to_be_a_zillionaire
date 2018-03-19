@@ -60,6 +60,7 @@ public class CurrentPlayer {
     }
 
     public void setCurrentPlayerTurnOver(boolean curturn) {
+        this.currentPlayerTurn = false;
         currentPlayer.setTurnOver(curturn);
 }
 

@@ -83,7 +83,6 @@ public class QuizQuestions {
         if (indexLocation == -1){
             return null;
         }else{
-            System.out.println(questionN.isQuestionAnswered());
             return (Question) questionTopics.get(categoryInt).get(indexLocation);
         }
     }

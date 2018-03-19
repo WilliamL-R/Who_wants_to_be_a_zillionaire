@@ -4,7 +4,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class MainGUI {
 
@@ -44,8 +43,11 @@ public class MainGUI {
     private JLabel answer4percent;
     private JPanel GameOverPanel;
     private JLabel gameoverlogo;
-    private JButton button1;
+    private JButton backtomenu;
     private JList endPlayerList;
+    private JButton exitgameendscreen;
+    private JButton exitgamemenuscreen;
+    private JTextArea questionArea;
     private CurrentPlayer curplay;
     private PlayerList playerList;
     private QuizQuestions quiz;
@@ -132,6 +134,7 @@ public class MainGUI {
                 QuestionPanel.setVisible(true);
                 genQuestion(0);
                 questionLabel.setText(currq.getCurrentQString());
+                questionArea.setText(currq.getCurrentQString());
                 answer1.setText(currq.getCurrentAnswerLocation(0));
                 answer2.setText(currq.getCurrentAnswerLocation(1));
                 answer3.setText(currq.getCurrentAnswerLocation(2));
@@ -207,6 +210,7 @@ public class MainGUI {
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
                     setCurrentPlayer();
+                    System.out.println(curplay.isCurrentPlayerTurn());
                     playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
                     currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
                 }
@@ -236,10 +240,11 @@ public class MainGUI {
                 } else {
                     JOptionPane.showMessageDialog(MainPanel, "You have lost the game.");
                     clearLabels();
-                    System.out.println(curplay.isCurrentPlayerTurn());
+                    curplay.setCurrentPlayerTurnOver(true);
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
                     setCurrentPlayer();
+                    System.out.println(curplay.isCurrentPlayerTurn());
                     playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
                     currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
                 }
@@ -273,6 +278,7 @@ public class MainGUI {
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
                     setCurrentPlayer();
+                    System.out.println(curplay.isCurrentPlayerTurn());
                     playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
                     currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
                 }
@@ -306,6 +312,7 @@ public class MainGUI {
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
                     setCurrentPlayer();
+                    System.out.println(curplay.isCurrentPlayerTurn());
                     playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
                     currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
                 }
@@ -361,6 +368,25 @@ public class MainGUI {
 
             }
         });
+        backtomenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GameOverPanel.setVisible(false);
+                MenuPanel.setVisible(true);
+            }
+        });
+        exitgameendscreen.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exitBox();
+            }
+        });
+        exitgamemenuscreen.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exitBox();
+            }
+        });
     }
 
     public void clearLabels(){
@@ -397,6 +423,16 @@ public class MainGUI {
     public void gameOverScreen() {
         CategoryPanel.setVisible(false);
         GameOverPanel.setVisible(true);
+    }
+
+    public void exitBox(){
+        int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?",
+                "Exit", JOptionPane.YES_NO_OPTION);
+        if(reply == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }else{
+            return;
+        }
     }
 
     public static void main(String[] args) {
