@@ -13,7 +13,6 @@ public class MainGUI {
     private JButton rulesButton;
     private JPanel RulesPanel;
     private JButton menuButton;
-    private JTextField theRulesWillGoTextField;
     private JPanel PlayerPanel;
     private JButton addPlayer;
     private JTextField playerNameEntered;
@@ -48,10 +47,13 @@ public class MainGUI {
     private JButton exitgameendscreen;
     private JButton exitgamemenuscreen;
     private JTextArea questionArea;
+    private JLabel logo;
+    private JTextArea Rules;
     private CurrentPlayer curplay;
     private PlayerList playerList;
     private QuizQuestions quiz;
     private CurrentQuestion currq;
+    private Sound buttonSound;
 
     private int[] todisable;
     ArrayList<JLabel> percentLabel = new ArrayList<>(Arrays.asList(answer1percent,answer2percent,answer3percent,answer4percent));
@@ -64,6 +66,7 @@ public class MainGUI {
             public void actionPerformed(ActionEvent e) {
                 MenuPanel.setVisible(false);
                 PlayerPanel.setVisible(true);
+                Sound buttonSound = new Sound();
                 createPlayerList();
             }
         });
@@ -121,6 +124,10 @@ public class MainGUI {
             public void actionPerformed(ActionEvent e) {
                 PlayerPanel.setVisible(false);
                 CategoryPanel.setVisible(true);
+                genQuestionList();
+                genQuestions(0);
+                genQuestions(1);
+                genQuestions(2);
                 setCurrentPlayer();
                 playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
                 currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
@@ -132,8 +139,7 @@ public class MainGUI {
             public void actionPerformed(ActionEvent e) {
                 CategoryPanel.setVisible(false);
                 QuestionPanel.setVisible(true);
-                genQuestion(0);
-                questionLabel.setText(currq.getCurrentQString());
+                getQuestion(0);
                 questionArea.setText(currq.getCurrentQString());
                 answer1.setText(currq.getCurrentAnswerLocation(0));
                 answer2.setText(currq.getCurrentAnswerLocation(1));
@@ -151,8 +157,8 @@ public class MainGUI {
             public void actionPerformed(ActionEvent e) {
                 CategoryPanel.setVisible(false);
                 QuestionPanel.setVisible(true);
-                genQuestion(1);
-                questionLabel.setText(currq.getCurrentQString());
+                getQuestion(1);
+                questionArea.setText(currq.getCurrentQString());
                 answer1.setText(currq.getCurrentAnswerLocation(0));
                 answer2.setText(currq.getCurrentAnswerLocation(1));
                 answer3.setText(currq.getCurrentAnswerLocation(2));
@@ -169,8 +175,8 @@ public class MainGUI {
             public void actionPerformed(ActionEvent e) {
                 CategoryPanel.setVisible(false);
                 QuestionPanel.setVisible(true);
-                genQuestion(2);
-                questionLabel.setText(currq.getCurrentQString());
+                getQuestion(2);
+                questionArea.setText(currq.getCurrentQString());
                 answer1.setText(currq.getCurrentAnswerLocation(0));
                 answer2.setText(currq.getCurrentAnswerLocation(1));
                 answer3.setText(currq.getCurrentAnswerLocation(2));
@@ -191,7 +197,7 @@ public class MainGUI {
                     JOptionPane.showMessageDialog(MainPanel, "The question is correct!");
                     curplay.setCurrentPlayerMoney();
                     clearLabels();
-                    currq.setCurrentQuestionAnswered(true);
+                        currq.setCurrentQuestionAnswered(true);
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
                     if(curplay.getCurrentPlayerMoney() >= 1638400){
@@ -294,6 +300,7 @@ public class MainGUI {
                     curplay.setCurrentPlayerMoney();
                     clearLabels();
                     currq.setCurrentQuestionAnswered(true);
+
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
                     if(curplay.getCurrentPlayerMoney() >= 1638400){
@@ -413,12 +420,22 @@ public class MainGUI {
             gameOverScreen();
         }
     }
+    public void setQuestionAnswered(){
+        currq.setCurrentQuestionAnswered(true);
+    }
 
-    public void genQuestion(int categoryInt) {
+    public void genQuestionList(){
         quiz = new QuizQuestions();
+    }
+
+    public void genQuestions(int categoryInt) {
         quiz.QuizQuestions(categoryInt);
+    }
+
+    public void getQuestion(int categoryInt) {
         currq = new CurrentQuestion(quiz,categoryInt);
     }
+
 
     public void gameOverScreen() {
         CategoryPanel.setVisible(false);
