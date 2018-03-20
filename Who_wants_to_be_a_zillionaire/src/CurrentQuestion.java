@@ -7,6 +7,7 @@ import java.util.Random;
 
 public class CurrentQuestion {
 
+    private QuizQuestions currentQuiz;
     private Question currentQobject;
     private String currentQString;
     private String[] currentAnswers;
@@ -16,7 +17,8 @@ public class CurrentQuestion {
 
 
     public CurrentQuestion(QuizQuestions quizQuestions, int categoryInt){
-        this.currentQobject = quizQuestions.generateQuestion(categoryInt);
+        this.currentQuiz  = quizQuestions;
+        this.currentQobject = currentQuiz.generateQuestion(categoryInt);
         this.currentQString = currentQobject.getQuestion();
         this.currentAnswers = currentQobject.getAnswers();
         this.currentCorrectAnswer = currentQobject.getCorrectAnswer();
@@ -53,8 +55,12 @@ public class CurrentQuestion {
     }
 
     public void setCurrentQuestionAnswered(boolean currentQuestionAnswered) {
+        System.out.println("currentQuestionAnswered: " + currentQuestionAnswered);
         this.currentQuestionAnswered = currentQuestionAnswered;
+        System.out.println("this: " + this.currentQuestionAnswered);
         currentQobject.setQuestionAnswered(currentQuestionAnswered);
+        currentQuiz.setAnswered(currentQobject);
+        System.out.println("currentQobject: " + currentQobject);
     }
 
     public int[] halfAndHalf( int currentcorans){
@@ -123,4 +129,14 @@ public class CurrentQuestion {
     }
 
 
+    @Override
+    public String toString() {
+        return "CurrentQuestion{" +
+                "currentQobject=" + currentQobject +
+                ", currentQString='" + currentQString + '\'' +
+                ", currentAnswers=" + Arrays.toString(currentAnswers) +
+                ", currentCorrectAnswer=" + currentCorrectAnswer +
+                ", currentQuestionAnswered=" + currentQuestionAnswered +
+                '}';
+    }
 }

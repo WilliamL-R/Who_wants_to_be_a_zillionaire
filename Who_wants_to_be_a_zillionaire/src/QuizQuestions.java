@@ -35,6 +35,7 @@ public class QuizQuestions {
 
             int numberOfAnswers = 0;
             int counter = 0;
+            boolean questionanswered = false;
 
             do{
                 do{
@@ -52,10 +53,12 @@ public class QuizQuestions {
                     }
                 } while (correctAnswer == 0);
 
-                questionTopics.get(categoryInt).add(new Question(question, answers, correctAnswer));
+                questionTopics.get(categoryInt).add(new Question(question, answers, correctAnswer, questionanswered));
                 numberOfAnswers = 0;
                 counter = 0;
                 correctAnswer = 0;
+                questionanswered = false;
+
 
 
             }while (scanner.hasNext());
@@ -83,11 +86,34 @@ public class QuizQuestions {
         if (indexLocation == -1){
             return null;
         }else{
-            System.out.println(questionN.isQuestionAnswered());
-            return (Question) questionTopics.get(categoryInt).get(indexLocation);
+            return questionN;
         }
     }
 
+    public void setAnswered(Question questionObj){
+        boolean loopDone = false;
+        for(int count1=0; count1<=questionTopics.size(); count1++){
+           ArrayList<Question> arrayName = questionTopics.get(count1);
+
+           for(int count2=0; count2<arrayName.size(); count2++){
+               Question questcheck = arrayName.get(count2);
+               if(questcheck.getQuestion().equals(questionObj.getQuestion())){
+                   questcheck.setQuestionAnswered(true);
+                   arrayName.set(count2, questionObj);
+                   System.out.println(arrayName.get(count2));
+                   loopDone = true;
+                   if (loopDone == true) {
+                       break;
+                   }
+               }
+           }
+            if (loopDone == false){
+                continue;
+            }else{
+                break;
+            }
+        }
+    }
 
     public void initialiseLists(){
         int i = 0;

@@ -8,11 +8,11 @@ public class Question implements Serializable {
     private int correctAnswer;
     private boolean questionAnswered;
 
-    public Question(String question, String[] answers, int correctAnswer){
+    public Question(String question, String[] answers, int correctAnswer, boolean questionAnswered){
         this.question = question;
         this.answers = answers;
         this.correctAnswer = correctAnswer;
-        this.questionAnswered = false;
+        this.questionAnswered = questionAnswered;
     }
 
     public String getQuestion() {
@@ -41,6 +41,7 @@ public class Question implements Serializable {
                 "question='" + question + '\'' +
                 ", answers=" + Arrays.toString(answers) +
                 ", correctAnswer=" + correctAnswer +
+                ", questionAnswered=" + questionAnswered +
                 '}';
     }
 }

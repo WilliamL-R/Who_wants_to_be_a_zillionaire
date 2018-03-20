@@ -7,7 +7,7 @@ public class PlayerList extends DefaultListModel<Player> {
         super();
     }
 
-    public void addPlayer(String name){
+    public void addPlayer(String name) {
         super.addElement(new Player(name));
     }
 
@@ -50,5 +50,4 @@ public class PlayerList extends DefaultListModel<Player> {
             return (Player)super.elementAt(indexLocation);
         }
     }
-
 }
