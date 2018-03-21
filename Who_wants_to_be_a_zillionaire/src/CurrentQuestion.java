@@ -29,38 +29,22 @@ public class CurrentQuestion {
         return currentQString;
     }
 
-    public void setCurrentQString(String currentQString) {
-        this.currentQString = currentQString;
-    }
 
     public String getCurrentAnswerLocation(int indexLocation) {
        String answer = currentAnswers[indexLocation];
         return answer;
     }
 
-    public String[] getCurrentAnswers(){
-        return currentAnswers;
-    }
 
     public int getCurrentCorrectAnswer() {
         return currentCorrectAnswer;
     }
 
-    public void setCurrentCorrectAnswer(int currentCorrectAnswer) {
-        this.currentCorrectAnswer = currentCorrectAnswer;
-    }
-
-    public boolean isCurrentQuestionAnswered() {
-        return currentQuestionAnswered;
-    }
 
     public void setCurrentQuestionAnswered(boolean currentQuestionAnswered) {
-        System.out.println("currentQuestionAnswered: " + currentQuestionAnswered);
         this.currentQuestionAnswered = currentQuestionAnswered;
-        System.out.println("this: " + this.currentQuestionAnswered);
         currentQobject.setQuestionAnswered(currentQuestionAnswered);
         currentQuiz.setAnswered(currentQobject);
-        System.out.println("currentQobject: " + currentQobject);
     }
 
     public int[] halfAndHalf( int currentcorans){

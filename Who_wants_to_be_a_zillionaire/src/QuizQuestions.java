@@ -94,13 +94,11 @@ public class QuizQuestions {
         boolean loopDone = false;
         for(int count1=0; count1<=questionTopics.size(); count1++){
            ArrayList<Question> arrayName = questionTopics.get(count1);
-
            for(int count2=0; count2<arrayName.size(); count2++){
                Question questcheck = arrayName.get(count2);
                if(questcheck.getQuestion().equals(questionObj.getQuestion())){
                    questcheck.setQuestionAnswered(true);
                    arrayName.set(count2, questionObj);
-                   System.out.println(arrayName.get(count2));
                    loopDone = true;
                    if (loopDone == true) {
                        break;

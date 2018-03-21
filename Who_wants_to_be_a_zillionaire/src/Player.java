@@ -5,9 +5,6 @@ public class Player implements Serializable {
     private int moneyWon;
     private boolean turnOver;
 
-    public Player(){
-    }
-
     public Player(String pn){
         this.playerName = pn;
         this.moneyWon = 0;
