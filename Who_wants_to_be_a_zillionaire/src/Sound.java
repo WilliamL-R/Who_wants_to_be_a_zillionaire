@@ -4,10 +4,11 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 public class Sound {
-    public void playSound() {
+    public void playSound(int index) {
+        String[] soundFile = {"src/sounds/Click.wav","src/sounds/WrongBuzz.wav","src/sounds/RightBuzz.wav"};
         try {
-            String soundFile = "soundhere.mp3";
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundFile).getAbsoluteFile());
+//            String soundFile = "src/Click.wav";
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundFile[index]).getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();

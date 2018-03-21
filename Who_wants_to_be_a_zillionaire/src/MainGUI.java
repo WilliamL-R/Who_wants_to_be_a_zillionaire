@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -49,11 +48,12 @@ public class MainGUI {
     private JTextArea questionArea;
     private JLabel logo;
     private JTextArea Rules;
+
     private CurrentPlayer curplay;
     private PlayerList playerList;
     private QuizQuestions quiz;
     private CurrentQuestion currq;
-    private Sound buttonSound;
+    private Sound buttonClickSound = new Sound();
 
     private int[] todisable;
     ArrayList<JLabel> percentLabel = new ArrayList<>(Arrays.asList(answer1percent,answer2percent,answer3percent,answer4percent));
@@ -66,7 +66,7 @@ public class MainGUI {
             public void actionPerformed(ActionEvent e) {
                 MenuPanel.setVisible(false);
                 PlayerPanel.setVisible(true);
-                Sound buttonSound = new Sound();
+                buttonClickSound.playSound(0);
                 createPlayerList();
             }
         });
@@ -75,6 +75,7 @@ public class MainGUI {
             public void actionPerformed(ActionEvent e) {
                 MenuPanel.setVisible(false);
                 RulesPanel.setVisible(true);
+                buttonClickSound.playSound(0);
             }
         });
         menuButton.addActionListener(new ActionListener() {
@@ -82,14 +83,19 @@ public class MainGUI {
             public void actionPerformed(ActionEvent e) {
                 RulesPanel.setVisible(false);
                 MenuPanel.setVisible(true);
+                buttonClickSound.playSound(0);
             }
         });
         addPlayer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                buttonClickSound.playSound(0);
                 String newPlayerName = playerNameEntered.getText();
+                newPlayerName.toLowerCase();
                 if (newPlayerName.equals("")) {
                     JOptionPane.showMessageDialog(MainPanel, "Please enter player name.");
+                } else if(!newPlayerName.matches("[a-zA-Z]+")){
+                    JOptionPane.showMessageDialog(MainPanel, "No special characters or numbers allowed.");
                 } else {
                     playerList.addPlayer(newPlayerName);
                     playerNameEntered.setText("");
@@ -97,11 +103,10 @@ public class MainGUI {
             }
         });
 
-        removePlayer.addComponentListener(new ComponentAdapter() {
-        });
         removePlayer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                buttonClickSound.playSound(0);
                 int selectedIndex = startPlayersList.getSelectedIndex();
                 if (selectedIndex == -1) {
                     JOptionPane.showMessageDialog(MainPanel, "Please select a player to remove.");
@@ -122,6 +127,11 @@ public class MainGUI {
         startGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                buttonClickSound.playSound(0);
+                if(playerList.size() == 0){
+                    JOptionPane.showMessageDialog(MainPanel, "Enter a player.");
+                    return;
+                }
                 PlayerPanel.setVisible(false);
                 CategoryPanel.setVisible(true);
                 genQuestionList();
@@ -137,6 +147,7 @@ public class MainGUI {
         generalKnowledgeSelect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                buttonClickSound.playSound(0);
                 CategoryPanel.setVisible(false);
                 QuestionPanel.setVisible(true);
                 getQuestion(0);
@@ -155,6 +166,7 @@ public class MainGUI {
         videoGameSelect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                buttonClickSound.playSound(0);
                 CategoryPanel.setVisible(false);
                 QuestionPanel.setVisible(true);
                 getQuestion(1);
@@ -173,6 +185,7 @@ public class MainGUI {
         musicSelect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                buttonClickSound.playSound(0);
                 CategoryPanel.setVisible(false);
                 QuestionPanel.setVisible(true);
                 getQuestion(2);
@@ -194,40 +207,7 @@ public class MainGUI {
                 int answer = 1;
                 boolean rightAnswer = currq.checkAnswer(answer);
                 if (rightAnswer == true) {
-                    JOptionPane.showMessageDialog(MainPanel, "The question is correct!");
-                    curplay.setCurrentPlayerMoney();
-                    clearLabels();
-                        currq.setCurrentQuestionAnswered(true);
-                    QuestionPanel.setVisible(false);
-                    CategoryPanel.setVisible(true);
-                    if(curplay.getCurrentPlayerMoney() >= 1638400){
-                        JOptionPane.showMessageDialog(MainPanel, "You have won the game!");
-                        curplay.setCurrentPlayerTurnOver(true);
-                        setCurrentPlayer();
-                        playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
-                        currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
-                    }else {
-                        currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(MainPanel, "You have lost the game.");
-                    curplay.setCurrentPlayerTurnOver(true);
-                    clearLabels();
-                    QuestionPanel.setVisible(false);
-                    CategoryPanel.setVisible(true);
-                    setCurrentPlayer();
-                    System.out.println(curplay.isCurrentPlayerTurn());
-                    playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
-                    currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
-                }
-            }
-        });
-        answer2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int answer = 2;
-                boolean rightAnswer = currq.checkAnswer(answer);
-                if (rightAnswer == true) {
+                    buttonClickSound.playSound(2);
                     JOptionPane.showMessageDialog(MainPanel, "The question is correct!");
                     curplay.setCurrentPlayerMoney();
                     clearLabels();
@@ -244,8 +224,49 @@ public class MainGUI {
                         currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
                     }
                 } else {
+                    buttonClickSound.playSound(1);
+                    JOptionPane.showMessageDialog(MainPanel, "You have lost the game.");
+                    curplay.setCurrentPlayerTurnOver(true);
+                    clearLabels();
+                    askthepublic.setEnabled(true);
+                    halfandhalf.setEnabled(true);
+                    QuestionPanel.setVisible(false);
+                    CategoryPanel.setVisible(true);
+                    setCurrentPlayer();
+                    System.out.println(curplay.isCurrentPlayerTurn());
+                    playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
+                    currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                }
+            }
+        });
+        answer2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int answer = 2;
+                boolean rightAnswer = currq.checkAnswer(answer);
+                if (rightAnswer == true) {
+                    buttonClickSound.playSound(2);
+                    JOptionPane.showMessageDialog(MainPanel, "The question is correct!");
+                    curplay.setCurrentPlayerMoney();
+                    clearLabels();
+                    currq.setCurrentQuestionAnswered(true);
+                    QuestionPanel.setVisible(false);
+                    CategoryPanel.setVisible(true);
+                    if(curplay.getCurrentPlayerMoney() >= 1638400){
+                        JOptionPane.showMessageDialog(MainPanel, "You have won the game!");
+                        curplay.setCurrentPlayerTurnOver(true);
+                        setCurrentPlayer();
+                        playerActiveLabel.setText("Active Player: " + curplay.getCurrentPlayerName());
+                        currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                    }else {
+                        currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
+                    }
+                } else {
+                    buttonClickSound.playSound(1);
                     JOptionPane.showMessageDialog(MainPanel, "You have lost the game.");
                     clearLabels();
+                    askthepublic.setEnabled(true);
+                    halfandhalf.setEnabled(true);
                     curplay.setCurrentPlayerTurnOver(true);
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
@@ -262,6 +283,7 @@ public class MainGUI {
                 int answer = 3;
                 boolean rightAnswer = currq.checkAnswer(answer);
                 if (rightAnswer == true) {
+                    buttonClickSound.playSound(2);
                     JOptionPane.showMessageDialog(MainPanel, "The question is correct!");
                     curplay.setCurrentPlayerMoney();
                     clearLabels();
@@ -278,8 +300,11 @@ public class MainGUI {
                         currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
                     }
                 } else {
+                    buttonClickSound.playSound(1);
                     JOptionPane.showMessageDialog(MainPanel, "You have lost the game.");
                     clearLabels();
+                    askthepublic.setEnabled(true);
+                    halfandhalf.setEnabled(true);
                     curplay.setCurrentPlayerTurnOver(true);
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
@@ -296,6 +321,7 @@ public class MainGUI {
                 int answer = 4;
                 boolean rightAnswer = currq.checkAnswer(answer);
                 if (rightAnswer == true) {
+                    buttonClickSound.playSound(2);
                     JOptionPane.showMessageDialog(MainPanel, "The question is correct!");
                     curplay.setCurrentPlayerMoney();
                     clearLabels();
@@ -313,8 +339,11 @@ public class MainGUI {
                         currentMoney.setText("Current Money: £" + curplay.getCurrentPlayerMoney());
                     }
                 } else {
+                    buttonClickSound.playSound(1);
                     JOptionPane.showMessageDialog(MainPanel, "You have lost the game.");
                     clearLabels();
+                    askthepublic.setEnabled(true);
+                    halfandhalf.setEnabled(true);
                     curplay.setCurrentPlayerTurnOver(true);
                     QuestionPanel.setVisible(false);
                     CategoryPanel.setVisible(true);
@@ -328,6 +357,7 @@ public class MainGUI {
         halfandhalf.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                buttonClickSound.playSound(0);
                 halfandhalf.setEnabled(false);
                 todisable = currq.halfAndHalf(currq.getCurrentCorrectAnswer());
                 String disable1="answer"+Integer.toString(todisable[0]);
@@ -364,8 +394,8 @@ public class MainGUI {
             }
         });
         askthepublic.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
+                buttonClickSound.playSound(0);
                 askthepublic.setEnabled(false);
                 for(JLabel percentLabel : percentLabel){
                     percentLabel.setVisible(true);
@@ -376,8 +406,8 @@ public class MainGUI {
             }
         });
         backtomenu.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
+                buttonClickSound.playSound(0);
                 GameOverPanel.setVisible(false);
                 MenuPanel.setVisible(true);
             }
@@ -385,12 +415,14 @@ public class MainGUI {
         exitgameendscreen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                buttonClickSound.playSound(0);
                 exitBox();
             }
         });
         exitgamemenuscreen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                buttonClickSound.playSound(0);
                 exitBox();
             }
         });
@@ -453,10 +485,11 @@ public class MainGUI {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("MainGUI");
+        JFrame frame = new JFrame("Who Wants to be a Zillionaire?");
         frame.setContentPane(new MainGUI().MainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+
     }
 }
